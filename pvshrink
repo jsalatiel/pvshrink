@@ -113,7 +113,7 @@ while True:
     print("%d of %d (%.2f%%) done" % (total_segments_moved, total_segments_to_move, 100*float(total_segments_moved)/float(total_segments_to_move)))
 
 pvck = subprocess.check_output(['pvck', device])
-
+pvck = pvck.decode('utf-8')
 match = re.search(r'Found text metadata area: offset=(\d+), size=(\d+)', pvck)
 if match is None:
     print("Could not parse pvck output:\n %s" % pvck)
@@ -123,7 +123,7 @@ metadata_size = int(match.group(1)) + int(match.group(2))
 print("Metadata size: %d b" % metadata_size)
 
 pvdisplay = subprocess.check_output(['pvdisplay','--units','b', device])
-
+pvdisplay = pvdisplay.decode('utf-8')
 match = re.search(r'PE Size\s*(\d+)', pvdisplay)
 if match is None:
     print("Could not parse pvdisplay output:\n %s" % pvdisplay)
